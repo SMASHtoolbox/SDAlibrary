@@ -1,7 +1,7 @@
-% readSDA Read records from a SDA
+% readSDA Read archive records
 %
 % This function reads records from a Sandia Data Archive (SDA) file.
-% Individual records are access by their label.
+% Individual records are accessed by their label.
 %    variable=readSDA(filename,label);
 %    [variable,type,description]=readSDA(filename,label);
 % Label wildcards are permitted and may return multiple variables (with
@@ -9,7 +9,7 @@
 %
 % Calling this function with no output:
 %    readSDA(filename,label); % load a specific record
-%    readSDA('*'); % load all records
+%    readSDA(filename,'*'); % load all records
 % loads data records as variables in the calling workspace.  These
 % variables are named after the archive labels as closely as possible,
 % subject to MATLAB variable restrictions (e.g., spaces are convereted to
@@ -21,7 +21,7 @@
 % well as external records, such as data files.  These files are exported
 % from the archive instead of loaded into MATLAB.
 %
-% See also writeSDA
+% See also probesda, writeSDA, SDAbrowser
 %
 
 %
