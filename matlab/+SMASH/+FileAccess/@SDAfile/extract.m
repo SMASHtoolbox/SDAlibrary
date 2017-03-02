@@ -24,7 +24,7 @@ end
 
 setname=['/' label];
 try
-    h5readatt(archive.ArchiveFile,setname,'RecordType');
+    readAttribute(archive.ArchiveFile,setname,'RecordType');
     found=true;
 catch
     found=false;
@@ -47,10 +47,10 @@ for k=1:numel(info)
 end
 
 % extract data based on type
-switch h5readatt(archive.ArchiveFile,setname,'RecordType');
+switch readAttribute(archive.ArchiveFile,setname,'RecordType');
     case {'numeric','file'}
         data=extract_numeric(archive,repmat(setname,[1 2]));
-        options.Deflate=h5readatt(archive.ArchiveFile,setname,'Deflate');
+        options.Deflate=readAttribute(archive.ArchiveFile,setname,'Deflate');
     case 'logical'
         data=extract_logical(archive,repmat(setname,[1 2]));
     case 'character'

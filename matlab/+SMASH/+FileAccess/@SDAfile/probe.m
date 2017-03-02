@@ -34,9 +34,12 @@ Ngroups=numel(info.Groups);
 keep=true(1,Ngroups);
 for k=1:Ngroups
     temp=info.Groups(k).Name;
+    if iscell(temp)
+        keyboard
+    end
     label{k}=temp(2:end);
-    description{k}=h5readatt(object.ArchiveFile,temp,'Description');
-    type{k}=h5readatt(object.ArchiveFile,temp,'RecordType');
+    description{k}=readAttribute(object.ArchiveFile,temp,'Description');
+    type{k}=readAttribute(object.ArchiveFile,temp,'RecordType');
     % determine if record matches target pattern
     if isempty(target)
         continue

@@ -18,7 +18,7 @@ assert(nargin>=3,'ERROR: insufficient input');
 assert(ischar(description),'ERROR: invalid input');
 
 % determine if archive is writable
-setting=h5readatt(archive.ArchiveFile,'/','Writable');
+setting=readAttribute(archive.ArchiveFile,'/','Writable');
 if strcmpi(setting,'no')
     fprintf('Description cannot be changed because archive is not writable\n');
     return
@@ -27,7 +27,7 @@ end
 % verify label
 setname=['/' label];
 try
-    h5readatt(archive.ArchiveFile,setname,'Description');
+    readAttribute(archive.ArchiveFile,setname,'Description');
 catch
     error('ERROR: invalid label');
 end

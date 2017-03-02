@@ -1,7 +1,7 @@
 function data=extract_numeric(archive,setname)
 
 file=archive.ArchiveFile;
-empty=h5readatt(file,setname,'Empty');
+empty=readAttribute(file,setname,'Empty');
 if strcmp(empty,'yes')
     empty=true;
 else
@@ -15,7 +15,7 @@ else
 end
 
 try
-    value=h5readatt(file,setname,'Sparse');
+    value=readAttribute(file,setname,'Sparse');
 catch
     value='no';
 end
@@ -24,13 +24,13 @@ if strcmpi(value,'yes')
 end
 
 try
-    value=h5readatt(file,setname,'Complex');
+    value=readAttribute(file,setname,'Complex');
 catch
     value='no';
 end
 if strcmpi(value,'yes')
     data=data(:,1)+1i*data(:,2);
-    ArraySize=h5readatt(file,setname,'ArraySize');
+    ArraySize=readAttribute(file,setname,'ArraySize');
     ArraySize=reshape(ArraySize,[1 numel(ArraySize)]);
     data=reshape(data,ArraySize);
 end

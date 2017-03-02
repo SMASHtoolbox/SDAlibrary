@@ -26,7 +26,7 @@ if (nargin<4) || isempty(deflate)
 end
 
 % determine if archive is writable
-setting=h5readatt(object.ArchiveFile,'/','Writable');
+setting=readAttribute(object.ArchiveFile,'/','Writable');
 if strcmpi(setting,'no')
     fprintf('File not imported because archive is not writable\n');
     return

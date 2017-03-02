@@ -4,7 +4,7 @@ file=archive.ArchiveFile;
 
 % extract field names
 name=cell(0);
-temp=h5readatt(file,setname,'FieldNames');
+temp=readAttribute(file,setname,'FieldNames');
 while ~isempty(temp)
     [new,~,~,next]=sscanf(temp,'%s',1);
     if ~isempty(new)
@@ -16,7 +16,7 @@ end
 data=struct();
 for k=1:numel(name)
     local=[setname '/' name{k}];
-    switch h5readatt(file,local,'RecordType')
+    switch readAttribute(file,local,'RecordType')
         case 'numeric'
             data.(name{k})=extract_numeric(archive,local);
         case 'logical'

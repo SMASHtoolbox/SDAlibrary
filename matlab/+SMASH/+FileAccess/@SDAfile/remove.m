@@ -30,12 +30,12 @@ switch varargin{1}
 end
 
 % determine if archive is writable
-setting=h5readatt(archive.ArchiveFile,'/','Writable');
+setting=readAttribute(archive.ArchiveFile,'/','Writable');
 if strcmpi(setting,'no')
     fprintf('Record(s) cannot be removed because archive is not writable\n');
     return
 end
-created=h5readatt(archive.ArchiveFile,'/','Created');
+created=readAttribute(archive.ArchiveFile,'/','Created');
 
 % move kept records to a temporary file
 [pathname,filename,ext]=fileparts(archive.ArchiveFile);
@@ -52,12 +52,12 @@ for k=1:numel(label)
         continue
     end
     setname=['/' label{k}];
-    deflate=h5readatt(archive.ArchiveFile,setname,'Deflate');
+    deflate=readAttribute(archive.ArchiveFile,setname,'Deflate');
     data=extract(archive,label{k});
-    description=h5readatt(archive.ArchiveFile,setname,'Description');
+    description=readAttribute(archive.ArchiveFile,setname,'Description');
     insert(new,label{k},data,description,deflate);
     h5writeatt(filename,setname,'RecordType',...
-        h5readatt(archive.ArchiveFile,setname,'RecordType'));
+        readAttribute(archive.ArchiveFile,setname,'RecordType'));
     if ShowWaitbar
         waitbar(k/numel(label),h);
     end

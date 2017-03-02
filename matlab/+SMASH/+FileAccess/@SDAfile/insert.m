@@ -42,7 +42,7 @@ if (nargin<5) || isempty(deflate)
 end
 
 % see if archive file is writable
-setting = h5readatt(archive.ArchiveFile,'/','Writable');
+setting = readAttribute(archive.ArchiveFile,'/','Writable');
 if strcmpi(setting,'no')
     fprintf('Data not inserted because archive is not writable\n');
     return
@@ -55,7 +55,7 @@ end
 
 datasetname=['/' label];
 try
-    h5readatt(archive.ArchiveFile,datasetname,'RecordType');
+    readAttribute(archive.ArchiveFile,datasetname,'RecordType');
     taken=true;
 catch
     taken=false;
@@ -68,19 +68,19 @@ if isnumeric(data)
     insert_numeric(archive,subname,data,deflate);
     h5writeatt(archive.ArchiveFile,datasetname,'RecordType','numeric');
     h5writeatt(archive.ArchiveFile,datasetname,'Empty',...
-        h5readatt(archive.ArchiveFile,subname,'Empty'));
+        readAttribute(archive.ArchiveFile,subname,'Empty'));
 elseif islogical(data)
     subname=repmat(datasetname,[1 2]);
     insert_logical(archive,subname,data,deflate);
     h5writeatt(archive.ArchiveFile,datasetname,'RecordType','logical');
     h5writeatt(archive.ArchiveFile,datasetname,'Empty',...
-        h5readatt(archive.ArchiveFile,subname,'Empty'));
+        readAttribute(archive.ArchiveFile,subname,'Empty'));
 elseif ischar(data)
     subname=repmat(datasetname,[1 2]);
     insert_character(archive,subname,data,deflate);
     h5writeatt(archive.ArchiveFile,datasetname,'RecordType','character');
     h5writeatt(archive.ArchiveFile,datasetname,'Empty',...
-        h5readatt(archive.ArchiveFile,subname,'Empty'));
+        readAttribute(archive.ArchiveFile,subname,'Empty'));
 elseif isa(data,'function_handle')
     insert_function(archive,repmat(datasetname,[1 2]),data,deflate);
     h5writeatt(archive.ArchiveFile,datasetname,'RecordType','function');

@@ -89,7 +89,7 @@ classdef SDAfile
                         object=SMASH.FileAccess.SDAfile(filename);                        
                     case 'append'
                         try
-                            format=h5readatt(filename,'/','FileFormat');
+                            format=readAttribute(filename,'/','FileFormat');
                             assert(strcmp(format,'SDA'));
                         catch
                             error('ERROR: invalid SDA file');
@@ -113,7 +113,7 @@ classdef SDAfile
                 h5writeatt(filename,'/','Writable','yes');
             end
             % match properties with file
-            object.Writable=h5readatt(filename,'/','Writable');            
+            object.Writable=readAttribute(filename,'/','Writable');            
         end        
         varargout=disp(varargin);
     end
@@ -136,7 +136,7 @@ classdef SDAfile
     methods (Static=true)
         function state=isWritable(filename)
             try
-                state=h5readatt(filename,'/','Writable');
+                state=readAttribute(filename,'/','Writable');
             catch                
                 state=[];
             end

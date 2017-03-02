@@ -1,19 +1,19 @@
 function data=extract_cell(archive,setname)
 
 file=archive.ArchiveFile;
-empty=h5readatt(file,setname,'Empty');
+empty=readAttribute(file,setname,'Empty');
 if strcmp(empty,'yes')
     data={};
     return
 end
 
-Lsize=h5readatt(file,setname,'RecordSize');
+Lsize=readAttribute(file,setname,'RecordSize');
 N=numel(Lsize);
 Lsize=reshape(Lsize,[1 N]);
 data=cell(Lsize);
 for k=1:numel(data)
     local=[setname '/' sprintf('element %d',k)];
-    switch h5readatt(file,local,'RecordType')
+    switch readAttribute(file,local,'RecordType')
         case 'numeric'
             data{k}=extract_numeric(archive,local);
         case 'logical'
