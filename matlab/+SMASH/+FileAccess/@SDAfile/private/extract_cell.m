@@ -24,11 +24,24 @@ for k=1:numel(data)
             data{k}=extract_function(archive,local);
         case 'structure'
             data{k}=extract_structure(archive,local);
+        case 'structures'
+            temp=extract_cell(archive,local);
+            data=repmat(temp{1},size(temp));
+            for n=2:numel(temp)
+                data(n)=temp{n};
+            end
         case 'cell'
             data{k}=extract_cell(archive,local);
         case 'object'
-            data{k}=extract_object(archive,local);           
+            data{k}=extract_object(archive,local);
+        case 'objects'
+            temp=extract_cell(archive,local);
+            data=repmat(temp{1},size(temp));
+            for n=1:numel(temp)
+                data(n)=temp{n};
+            end
         otherwise
+            error('ERROR: invalid record type');
     end
 end
 
