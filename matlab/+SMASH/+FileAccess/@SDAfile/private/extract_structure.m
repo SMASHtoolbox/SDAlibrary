@@ -28,11 +28,12 @@ for k=1:numel(name)
         case 'structure'
             data.(name{k})=extract_structure(archive,local);
         case 'structures'
-            temp=extract_cell(archive,local);
-            data=repmat(temp{1},size(temp));
-            for n=2:numel(temp)
-                data(n)=temp{n};
+            raw=extract_cell(archive,local);
+            temp=repmat(raw{1},size(raw));
+            for n=2:numel(raw)
+                temp(n)=raw{n};
             end
+            data.(name{k})=temp;
         case 'cell'
             data.(name{k})=extract_cell(archive,local);
         case 'object'
