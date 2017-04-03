@@ -1,3 +1,5 @@
+import os
+
 import h5py
 
 
@@ -21,7 +23,7 @@ def probe_file(archive_name):
     archive = SDAFile(archive_name, mode='r')
     attrs = archive.attrs
     keys = archive.keys()
-    probe_string = ''
+    probe_string = '\n' + os.path.abspath(archive_name) + '\n\n'
     for key, value in attrs.items():
         probe_string += _format_file_attr(key, value)
     probe_string += '-'*100 + '\n'
