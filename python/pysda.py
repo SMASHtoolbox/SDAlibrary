@@ -23,11 +23,12 @@ class SDAFile(h5py.File):  # pylint: disable=too-many-ancestors
     """
     def __init__(self, file_name, mode='r'):
         super(SDAFile, self).__init__(file_name, mode=mode)
-        self.file_format = self.attrs['FileFormat']
-        self.format_verion = self.attrs['FormatVersion']
-        self.created = self.attrs['Created']
-        self.updated = self.attrs['Updated']
-        self.writable = self.attrs['Writable']
+        if mode in ['w', 'w-', 'x']:
+            self._file_format = 'SDA'
+        else:
+            self._file_format = self.attrs['FileFormat']
+            if self._file_format.lower() != 'sda':
+                raise IOError
 
     # TODO: Implement Type checking for each record
 
