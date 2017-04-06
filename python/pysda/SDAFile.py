@@ -2,9 +2,18 @@ import os
 
 import h5py
 
+import pysda
+from pysda.recordtypes import (Numeric, Logical, Character, Function, Cell,
+                               Structure, Structures, Object, Objects)
+
+
+
+RECORDTYPES = {'Numeric': Numeric, 'Logical': Logical, 'Character': Character,
+               'Function': Function, 'Cell': Cell}
+
 
 class SDAFile(h5py.File):
-    """An SDA file object. Wrapper for the h5py.File
+    """SDA file object. Wrapper for the h5py.File
     object. Also functions as a top level group."""
     def __init__(self, archive_name, mode='r'):
         super(SDAFile, self).__init__(archive_name, mode)
@@ -12,13 +21,28 @@ class SDAFile(h5py.File):
     def __repr__(self):
         return '<SDA file "{}" (mode {})>'.format(self.filename, self.mode)
 
-    def __str__(self):
-        return repr(self)
+    def write(self, file_name):
+        new_file = SDAFile(file_name, mode='w-')
+        for key, val in self.items():
+            self.copy(val, new_file['/'])
+        new_file.close()
 
-    def _get_attrs(self):
-        return self.keys()
 
 
+
+
+
+
+
+
+
+def _cast_data(data):
+    data_type = data.attrs['RecordType']
+    data = RECORDTYPES[data_type](data)
+    return data
+
+
+# TODO: Move this somewhere else.
 def probe_file(archive_name):
     archive = SDAFile(archive_name, mode='r')
     attrs = archive.attrs
