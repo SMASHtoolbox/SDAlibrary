@@ -1,7 +1,17 @@
+"""
+:mod:`pysda` -- Python implementation of the SDA Library
+===========================================================
+
+Python implementation of the SDA Library
+
+.. module::
+   :synopsis: Python implementation of the SDA Library
+"""
+
 import h5py
 
 
-class SDAFile(h5py.File):
+class SDAFile(h5py.File):  # pylint: disable=too-many-ancestors
     """The main entry point for interacting with the SDA format.
     This file object contains most variables and methods needed
     for using the file. Note that the data is provided in a 'raw'
