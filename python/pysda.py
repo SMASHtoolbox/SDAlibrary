@@ -7,11 +7,12 @@ Python implementation of the SDA Library
 .. module::
    :synopsis: Python implementation of the SDA Library
 """
+import abc
 import time
-
 
 import h5py
 
+import traits
 from traits.api import HasTraits
 
 
@@ -19,7 +20,11 @@ FORMAT_NAME = 'SDA'
 FORMAT_VERSION = '1.1'
 
 
-class SDAFile(h5py.File):  # pylint: disable=too-many-ancestors
+class MetaSDAFile(abc.ABCMeta, traits.has_traits.MetaHasTraits):
+    pass
+
+
+class SDAFile(h5py.File, HasTraits):  # pylint: disable=too-many-ancestors
     """The main entry point for interacting with the SDA format.
     This file object contains most variables and methods needed
     for using the file. Note that the data is provided in a 'raw'
@@ -29,6 +34,8 @@ class SDAFile(h5py.File):  # pylint: disable=too-many-ancestors
     and may not be compatible with python. This issue may be
     addressed at a later time.
     """
+    __metaclass__ = MetaSDAFile
+
     def __init__(self, file_name, mode='r'):
         super(SDAFile, self).__init__(file_name, mode=mode)
         if mode in ['w', 'w-', 'x']:
@@ -49,85 +56,17 @@ def _format_time(time_struct):
     return formatted_time
 
 
-class MetaHolder(type(h5py.Group), type(HasTraits)):  # Oh dear...
+class MetaRecord(abc.ABCMeta, traits.has_traits.MetaHasTraits):  # Oh dear...
+    """Defined class for making multiple inhertance work
+    on h5py.File and HasTraits, since they are both metaclasses.
+    """
     pass
 
 
 class Record(h5py.Group, HasTraits):
     """The base class for SDA records. Contains logic for enforcing
     constraints on its members."""
-    __metaclass__ = MetaHolder
+    __metaclass__ = MetaRecord
+
     def __init__(self, record_type):
         self.record_type = record_type
-#
-#
-# class Record(object):
-#     def __init__(self):
-#         pass
-#
-#
-# class Numeric(Record):
-#     """Numeric arrays of arbitrary size/dimension."""
-#     def __init__(self):
-#         super(Numeric, self).__init__()
-#
-#
-# class Logical(Record):
-#     """Logical arays of arbitrary size/dimension."""
-#     def __init__(self):
-#         super(Logical, self).__init__()
-#
-#
-# class Character(Record):
-#     """Character arrays of arbitrary size/dimension."""
-#     def __init__(self):
-#         super(Character, self).__init__()
-#
-#
-# # This may need to be removed.
-# class Function(Record):
-#     """MATLAB function handles."""
-#     def __init__(self):
-#         super(Function, self).__init__()
-#
-#
-# class Cell(Record):
-#     """Cell arrays of arbitrary size/dimension."""
-#     def __init__(self):
-#         super(Cell, self).__init__()
-#
-#
-# class Structure(Record):
-#     """Structured data."""
-#     def __init__(self):
-#         super(Structure, self).__init__()
-#
-#
-# class Structures(Record):
-#     """Structured data array."""
-#     def __init__(self):
-#         super(Structures, self).__init__()
-#
-#
-# class Object(Record):
-#     """Custom MATLAB object."""
-#     def __init__(self):
-#         super(Object, self).__init__()
-#
-#
-# class Objects(Record):
-#     """Custom MATLAB object array."""
-#     def __init__(self):
-#         super(Objects, self).__init__()
-#
-#
-# class File(Record):
-#     """File stored inside an archive."""
-#     def __init__(self):
-#         super(File, self).__init__()
-#
-#
-# class Split(Record):
-#     """File split across multiple archives."""
-#     def __init__(self):
-#         super(Split, self).__init__()
