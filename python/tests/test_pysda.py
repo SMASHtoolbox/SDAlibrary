@@ -1,3 +1,4 @@
+import functools
 import time
 
 from nose.tools import *
@@ -8,9 +9,10 @@ def freeze_decorator(time_to_freeze):
     def function_decorator(func):
         original = time.localtime
 
+        @functools.wraps(func)
         def newf(*args, **kwargs):
-            time.localtime = lambda: time_to_freeze
-            result = f(*args, **kwargs)
+            time.localtime = lambda __: time_to_freeze
+            result = func(*args, **kwargs)
             time.localtime = original
             return result
         return newf
