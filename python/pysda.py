@@ -7,6 +7,8 @@ Python implementation of the SDA Library
 .. module::
    :synopsis: Python implementation of the SDA Library
 """
+import time
+
 
 import h5py
 
@@ -24,13 +26,15 @@ class SDAFile(h5py.File):  # pylint: disable=too-many-ancestors
     def __init__(self, file_name, mode='r'):
         super(SDAFile, self).__init__(file_name, mode=mode)
         if mode in ['w', 'w-', 'x']:
+            self._created = time.localtime(None)
+            print _format_time(self._created)
+            self.attrs['Created'] = _format_time(self._created)
             self._file_format = 'SDA'
-        else:
-            self._file_format = self.attrs['FileFormat']
-            if self._file_format.lower() != 'sda':
-                raise IOError
 
-    # TODO: Implement Type checking for each record
+
+def _format_time(time_struct):
+    formatted_time = time.strftime("%d-%b-%Y %H:%M:%S", time_struct)
+    return formatted_time
 
 # Record Defintions
 
