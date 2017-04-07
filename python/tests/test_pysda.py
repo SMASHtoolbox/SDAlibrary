@@ -21,18 +21,16 @@ def freeze_decorator(time_to_freeze):
 
 class TestPySDA(object):
     test_time = time.localtime(1483254000)  # January 1st, 2017 00:00:00
+    test_update_time = time.localtime(1483254001)
 
     def __init__(self):
         pass
 
     @freeze_decorator(test_time)
-    def test_created_time(self):
+    def test_init(self):
         f = pysda.SDAFile('test.sda', 'w')
-        expected = "01-Jan-2017 00:00:00"
-        actual = f.attrs['Created']
-        assert_equal(actual, expected)
-
-    def test_format_time(self):
-        expected = "01-Jan-2017 00:00:00"
-        actual = pysda._format_time(TestPySDA.test_time)
-        assert_equal(actual, expected)
+        assert_equal(f.attrs['FileFormat'], 'SDA')
+        assert_equal(f.attrs['FormatVersion'], '1.1')
+        assert_equal(f.attrs['Writable'], 'yes')
+        assert_equal(f.attrs['Created'], "01-Jan-2017 00:00:00")
+        assert_equal(f.attrs['Updated'], "01-Jan-2017 00:00:00")
