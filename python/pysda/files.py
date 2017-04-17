@@ -71,3 +71,9 @@ class SDAFile(h5py.File):
     def create_dataset(self, *args, **kwargs):
         # TODO: Find a better exception to raise here
         raise TypeError('There can be no datasets in the root group.')
+    
+    def create_group(self, name, record_type):
+        group = super(SDAFile, self).create_group(name)
+        group = pysda.groups.NumericRecord(group)
+        
+
