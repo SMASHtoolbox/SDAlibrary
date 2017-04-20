@@ -102,21 +102,26 @@ class SDAFile(h5py.File, HasTraits):
         data.attrs['Emplty'] = record_group.attrs['Empty']
 
     def _create_character(self, record_name, shape=None, data=None, maxshape=None, **kwds):
-            record_group = self.create_group(record_name)
-            record_group.attrs['RecordType'] = 'Character'
-            if data is None:
-                record_group.attrs['Empty'] = 'yes'
-            else:
-                record_group.attrs['Empty'] = 'no'
-            record_group.attrs['Deflate'] = str(kwds.get('Compression',0))
-            data = record_group.create_dataset(record_name, dtype=dtpye, shape=shape, data=data,
-                                               **kwds)
-            data.attrs['RecordType'] = record_group.attrs['RecordType']
-            data.attrs['Emplty'] = record_group.attrs['Empty']
+        record_group = self.create_group(record_name)
+        record_group.attrs['RecordType'] = 'Character'
+        if data is None:
+            record_group.attrs['Empty'] = 'yes'
+        else:
+            record_group.attrs['Empty'] = 'no'
+        record_group.attrs['Deflate'] = str(kwds.get('Compression',0))
+        data = record_group.create_dataset(record_name, dtype=dtpye, shape=shape, data=data,
+                                           **kwds)
+        data.attrs['RecordType'] = record_group.attrs['RecordType']
+        data.attrs['Emplty'] = record_group.attrs['Empty']
+        self._updated = 'now'  # TODO
+
 
     def _create_function(self, *args, **kwargs):
         raise NotImplemented(('Function records are matlab specific and cannot be created in',
                               'python.'))
 
+    def _create_cell(self, record_name):
+        record_group = self.create_group(record_name)
+        record_group.attrs['RecordType'] = 'Cell'
+        self._updated = 'now' # TODO
 
-        
