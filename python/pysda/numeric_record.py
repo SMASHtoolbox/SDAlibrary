@@ -1,6 +1,9 @@
 import h5py
 
 
-class NumericRecord(h5py.Group):
-    def __init__(self, groupbind, record_name=None, dtype=None, shape=None, data-None, maxshape=None 
-                 **kwds):
+class NumericRecord(object):
+    def __init__(self):
+        pass
+
+    def create(self, record_name, dtype, shape=None, data=None, maxshape=None,
+               **kwds)
