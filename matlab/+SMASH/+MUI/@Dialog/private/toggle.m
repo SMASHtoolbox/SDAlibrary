@@ -28,7 +28,8 @@ end
 dummy=repmat('M',[1 minwidth]);
 h=zeros([1 num_label]);
 for n=1:num_label
-    h(n)=object.local_uicontrol('Style','togglebutton','HorizontalAlignment','center',...
+    h(n)=local_uicontrol(object,...
+        'Style','togglebutton','HorizontalAlignment','center',...
         'String',dummy);
     set(h(n),'String',label{n});
     pos=get(h(n),'Position');

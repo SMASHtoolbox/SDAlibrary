@@ -68,7 +68,9 @@
 % control.
 %     >> h=addblock(object,'popup_button',label,choices,[minwidth]);
 % In this case, the label should be a two-element cell array; the first
-% element is the text label and the second element is the button label.
+% element is the text label and the second element is the button label.  A
+% similar syntax works for list box next to a push button.
+%    >> h=addblock(object,'listbox_button',label,choices,[minwidth],[height]);
 %
 % Table blocks allow for flexible display and interaction.
 %     >> h=addblock(object,'table',label,[minwidth],[rows]);
@@ -134,7 +136,11 @@ switch lower(style)
     case 'popup_button'
         h=popup_button(object,varargin{:});
     case 'table'
-        h=table(object,varargin{:}); % under construction
+        h=table(object,varargin{:}); 
+    case 'slider'
+        h=slider(object,varargin{:});
+    case 'listbox_button'
+        h=listbox_button(object,varargin{:});
     otherwise
         error('ERROR: %s is not a supported dialog style',style);
 end

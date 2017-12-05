@@ -67,9 +67,9 @@ classdef Dialog < handle
         Boxes = [] % Box handles (axes objects)
     end
     properties (SetAccess=immutable,Hidden=true)
-        FontName = get(0,'DefaultUIControlFontName')
-        FontUnits = get(0,'DefaultUIControlFontUnits')
-        FontSize = get(0,'DefaultUIControlFontSize')
+        FontName 
+        FontUnits
+        FontSize
         HorizontalMargin=0
         HorizontalGap=0
         VerticalMargin=0
@@ -95,6 +95,18 @@ classdef Dialog < handle
                     fprintf('Ignoring unrecogized name ''%s''\n',name);
                 end
             end
+            if isempty(object.FontName)
+                object.FontName=get(0,'DefaultUIControlFontName');
+            end
+            if isempty(object.FontUnits)
+                object.FontUnits=get(0,'DefaultUIControlFontUnits');
+            end
+            if isempty(object.FontSize)
+                object.FontSize=get(0,'DefaultUIControlFontSize');
+                %report=SMASH.System.checkDisplay();
+                %object.FontSize=object.FontSize...
+                %    *report.Resolution/get(0,'ScreenPixelsPerInch');
+            end            
             % create dialog and probe uicontrol size
             object.Handle=figure('Toolbar','none','MenuBar','none',...
                 'NumberTitle','off','IntegerHandle','off',...

@@ -46,7 +46,7 @@ for m=2:numel(label)
     ym=pos(2)+pos(4)/2;
     dummy=repmat('M',[1 L]);
     h(end+1)=local_uicontrol(object,'Style','pushbutton','String',dummy,...
-        'HorizontalAlignment','center');
+        'HorizontalAlignment','center'); %#ok<AGROW>
     object.Controls(end+1)=h(end);
     set(h(end),'String',label{m});
     pos=get(h(end),'Position');

@@ -42,20 +42,27 @@ h(end+1)=local_uicontrol(object,'Style','edit','HorizontalAlignment','left',...
     'String',dummy);
 object.Controls(end+1)=h(end);
 set(h(end),'String','');
-pos=get(h(end),'Position');
-x0=pos(1)+pos(3)+object.HorizontalGap;
-ym=pos(2)+pos(4)/2;
-minwidth(2)=max(numel(label{2}),minwidth(2));
-dummy=repmat('M',[1 minwidth(2)]);
-h(end+1)=local_uicontrol(object,'Style','pushbutton','String',dummy,...
-    'HorizontalAlignment','center');
-object.Controls(end+1)=h(end);
-set(h(end),'String',label{2});
-pos=get(h(end),'Position');
-pos(1)=x0;
-pos(2)=ym-pos(4)/2;
-set(h(end),'Position',pos);
-pushup(object,2);
+
+for n=2:numel(label)
+    minwidth(2)=max(numel(label{n}),minwidth(2));
+end
+
+for n=2:numel(label)
+    pos=get(h(end),'Position');
+    x0=pos(1)+pos(3)+object.HorizontalGap;
+    ym=pos(2)+pos(4)/2;
+    dummy=repmat('M',[1 minwidth(2)]);
+    h(end+1)=local_uicontrol(object,'Style','pushbutton','String',dummy,...
+        'HorizontalAlignment','center');
+    object.Controls(end+1)=h(end);
+    set(h(end),'String',label{2});
+    pos=get(h(end),'Position');
+    pos(1)=x0;
+    pos(2)=ym-pos(4)/2;
+    set(h(end),'Position',pos);
+end
+
+pushup(object,numel(label));
 make_room(object);
 
 % handle output

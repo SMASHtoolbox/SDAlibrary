@@ -38,6 +38,10 @@ switch style
         extent=get(h,'Extent');
         position(4)=position(4)-N*extent(4);
         set(h,'Position',position);
+    case 'slider'
+        parent=get(h,'Parent');
+        color=get(parent,'Color');
+        set(h,'BackgroundColor',color);
 end
 
 % handle output
