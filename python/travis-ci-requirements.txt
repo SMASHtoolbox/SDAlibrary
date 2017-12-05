@@ -1,0 +1,8 @@
+packaging
+nose
+Sphinx
+coverage
+coveralls
+h5py
+pandas
+scipy

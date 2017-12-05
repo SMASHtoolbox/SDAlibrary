@@ -1,20 +1,18 @@
-.. pySDA documentation master file, created by
-   sphinx-quickstart on Thu Apr  6 13:56:55 2017.
+.. sdafile documentation master file, created by
+   sphinx-quickstart on Wed Sep 13 12:59:23 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pySDA's documentation!
-=================================
+sdafile Documentation
+=====================
+
+Read, write, inspect, and manipulate Sandia Data Archive files.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   quickstart
+   record_types
+   api
+   license
