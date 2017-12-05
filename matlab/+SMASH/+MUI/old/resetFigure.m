@@ -1,5 +1,0 @@
-function resetFigure(target)
-
-
-
-end
